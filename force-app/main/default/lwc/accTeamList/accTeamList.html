@@ -1,0 +1,57 @@
+<template>
+    <lightning-card title="Account Team" icon-name="standard:team_member">
+        <template if:true={hasCreatePermission}>
+            <div slot="actions">
+                <lightning-button label="Add Team Member" onclick={handleAddClick} variant="neutral"></lightning-button>
+            </div>
+        </template>        
+        <template if:true={teamMembers.length}>
+            <lightning-datatable
+                key-field="Id"
+                data={teamMembers}
+                columns={columns}
+                hide-checkbox-column
+                show-row-number-column
+                onrowaction={handleRowAction}
+                class="scrollable-table">
+            </lightning-datatable>
+        </template>
+        <template if:false={teamMembers.length}>
+            <p class="slds-p-around_medium">No team members found.</p>
+        </template>
+    </lightning-card>
+
+    <!-- Modal -->
+    <template if:true={isModalOpen}>
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Add Account Team Member</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-record-edit-form object-api-name="AccountTeamMember">
+                        <lightning-input-field
+                            field-name="UserId"
+                            onchange={handleUserChange}
+                            required>
+                        </lightning-input-field>
+    
+                        <lightning-input-field
+                            field-name="TeamMemberRole"
+                            onchange={handleRoleChange}
+                            required>
+                        </lightning-input-field>
+                    </lightning-record-edit-form>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button-group>
+                        <lightning-button label="Cancel" onclick={handleModalCancel}></lightning-button>
+                        <lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
+                    </lightning-button-group>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    
+</template>
