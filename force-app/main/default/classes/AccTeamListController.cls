@@ -7,7 +7,7 @@ public without sharing class AccTeamListController {
                 throw new AuraHandledException('Account Id must not be null.');
             }
             return [
-                SELECT Id, UserId, User.Name, TeamMemberRole
+                SELECT Id, UserId, User.Name, User.CompanyName, TeamMemberRole
                 FROM AccountTeamMember
                 WHERE AccountId = :accountId
                 ORDER BY User.Name ASC
