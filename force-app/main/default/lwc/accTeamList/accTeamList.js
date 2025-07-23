@@ -51,7 +51,9 @@ export default class AccTeamList extends LightningElement {
         if (data) {
             this.teamMembers = data.map(member => ({
                 ...member,
-                userName: member.User?.Name
+                userName: member.User?.Name && member.User?.CompanyName
+                    ? `${member.User.Name} (${member.User.CompanyName})`
+                    : member.User?.Name || '',
             }));
             this.error = undefined;
         } else if (error) {
